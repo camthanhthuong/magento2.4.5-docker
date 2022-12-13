@@ -41,8 +41,8 @@ else
     sleep 10
     chmod -R 777 elasticsearch-log/
     docker compose up -d
-    sleep 20
-    echo "sleep 20s"
+    echo "sleep 50s"
+    sleep 50
     docker exec php-fpm sh install-magento2.sh
     chown -R www-data:www-data $DIR_PATH/mycode/magento2
     
