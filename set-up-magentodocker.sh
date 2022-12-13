@@ -46,7 +46,7 @@ else
     sleep 1
     apt-get update
     sleep 1
-    apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
     echo 'sleep 20s'
     sleep 20
     mkdir -p elasticsearch-log/elastic
