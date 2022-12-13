@@ -15,4 +15,4 @@ bin/magento setup:install --base-url=http://magento.local:8080/ \
 sleep 2
 bin/magento setup:config:set --page-cache=redis --page-cache-redis-server=127.0.0.1 --page-cache-redis-port=6379 --page-cache-redis-db=0
 sleep 2
-php bin/magento config:set admin/security/session_lifetime 86400 && php bin/magento cache:flush
+bin/magento config:set admin/security/session_lifetime 86400 && bin/magento cache:flush
