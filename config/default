@@ -1,0 +1,35 @@
+
+server {
+        listen 80 default_server;
+        
+        root /var/www/html;
+
+        index index.php index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass 127.0.0.1:9000;
+        }
+        location ~ /\.ht {
+                deny all;
+        }
+}
+
+upstream fastcgi_backend {
+
+     server  127.0.0.1:9000;
+
+}
+server {
+    listen 8080;
+    server_name magento2.local;
+    set $MAGE_ROOT /var/www/html/magento2;
+    set $MAGE_DEBUG_SHOW_ARGS 0;
+    include /var/www/html/magento2/nginx.conf.sample;
+}

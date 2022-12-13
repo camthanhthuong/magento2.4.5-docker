@@ -1,0 +1,73 @@
+version: '3.9'
+
+services:
+  nginx:
+    build:
+      dockerfile: Dockerfile-nginx
+      context: .
+    container_name: nginx
+    network_mode: "host"
+    volumes:
+      - ./mycode/:/var/www/html/
+      - ./config/default:/etc/nginx/sites-enabled/default
+      - /etc/timezone:/etc/timezone
+      - /etc/localtime:/etc/localtime
+      - ./nginx-log:/var/log/nginx/
+    depends_on:
+      - mysql
+      - php-fpm
+  php-fpm:
+    build: 
+      dockerfile: Dockerfile-php-fpm
+      context: .
+    container_name: php-fpm
+    network_mode: "host"
+    volumes:
+      - ./config/www.conf:/etc/php/8.1/fpm/pool.d/www.conf
+      - ./mycode/:/var/www/html/
+      - ./php8.1-fpm-log:/var/log/
+      - /etc/timezone:/etc/timezone
+      - /etc/localtime:/etc/localtime
+    depends_on:
+      - elasticsearch
+  mysql:
+    build:
+      dockerfile: Dockerfile-mysql
+      context: .
+    container_name: mysql
+    network_mode: "host"
+    volumes:
+      - ./data-mysqldb/:/var/lib/mysql
+  elasticsearch:
+    image: elasticsearch:7.17.8
+    container_name: elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=elasticsearch
+      - cluster.initial_master_nodes=elasticsearch
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms2G -Xmx2G"
+      - "transport.host=localhost"
+      - "bootstrap.system_call_filter=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elasticsearch-log/elastic:/usr/share/elasticsearch/data
+      - ./elasticsearch-log/logs:/usr/share/elasticsearch/logs
+      - /etc/timezone:/etc/timezone
+      - /etc/localtime:/etc/localtime
+    network_mode: "host"
+    depends_on:
+      - redis
+  redis:
+    image: redis:6.2
+    container_name: redis
+    network_mode: "host"
+    volumes:
+      - redis-data:/data:ro
+      - /etc/timezone:/etc/timezone
+      - /etc/localtime:/etc/localtime
+volumes:
+  redis-data:

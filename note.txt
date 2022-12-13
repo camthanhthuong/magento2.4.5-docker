@@ -1,0 +1,56 @@
+/usr/sbin/php-fpm8.1 --nodaemonize --fpm-config /etc/php/8.1/fpm/php-fpm.conf
+CMD ["nginx", "-g", "daemon off;"]
+/bin/kill -USR2 $MAINPID
+/usr/sbin/php-fpm7.4 --nodaemonize --fpm-config /etc/php/7.4/fpm/php-fpm.conf
+
+sudo apt install php8.1-fpm php8.1-common php8.1-mysql php8.1-gmp php8.1-curl php8.1-intl php8.1-mbstring php8.1-xmlrpc php8.1-gd php8.1-xml php8.1-cli php8.1-zip php8.1-soap php8.1-bcmath 
+
+
+php -d memory_limit=-1
+
+
+php bin/magento setup:install --base-url="http://magento.local/" --db-host="127.0.0.1" --db-name="magento2" --db-user="magento2" --db-password="Admin@123" --admin-firstname="magento" --admin-lastname="admin" --admin-email="admin@admin.com" --admin-user="admin" --admin-password="admin123" --use-rewrites="1" --backend-frontname="admin"
+
+mysql_secure_installation
+
+$i++;
+$cfg['Servers'][$i]['verbose'] = 'magento2-db';
+$cfg['Servers'][$i]['host'] = '127.0.0.1';
+$cfg['Servers'][$i]['port'] = '3306';
+$cfg['Servers'][$i]['socket'] = '';
+$cfg['Servers'][$i]['connect_type'] = 'tcp';
+$cfg['Servers'][$i]['extension'] = 'mysqli';
+$cfg['Servers'][$i]['auth_type'] = 'cookie';
+$cfg['Servers'][$i]['AllowNoPassword'] = false;
+
+apt install php8.1 php8.1-fpm php8.1-cli -y
+
+curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.2.10
+
+
+bin/magento setup:install --base-url=https://magento.local:8080/ \
+--db-host=127.0.0.1 --db-name=magento2 --db-user=root --db-password=Admin@123 \
+--admin-firstname=Magento --admin-lastname=User --admin-email=user@example.com \
+--admin-user=admin --admin-password=admin123 --language=en_US \
+--currency=USD --timezone=Asia/Ho_Chi_Minh --use-rewrites=1 \
+--search-engine=elasticsearch7 --elasticsearch-host=127.0.0.1 \
+--elasticsearch-port=9200
+
+
+bin/magento setup:config:set --page-cache=redis --page-cache-redis-server=127.0.0.1 --page-cache-redis-port=6379 --page-cache-redis-db=0
+
+volumes:
+    - /etc/timezone:/etc/timezone
+    - /etc/localtime:/etc/localtime
+
+
+php bin/magento config:set admin/security/session_lifetime 86400 && php bin/magento cache:flush
+
+
+$ echo "# repository" >> README.md
+$ git init
+$ git add README.md
+$ git commit -m "first commit"
+$ git branch -M main
+$ git remote add origin https://github.com/profile/repository.git
+$ git push -u origin main

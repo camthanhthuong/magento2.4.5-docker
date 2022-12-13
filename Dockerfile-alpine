@@ -1,0 +1,9 @@
+FROM alpine:latest
+
+COPY ./Fortinet_CA_SSL_1220222.crt /usr/local/share/ca-certificates/Fortinet_CA_SSL_1220222.crt
+
+RUN cat /usr/local/share/ca-certificates/Fortinet_CA_SSL_1220222.crt >> /etc/ssl/certs/ca-certificates.crt && \
+    apk --no-cache add \
+        curl
+RUN apk update
+RUN apk add bash
