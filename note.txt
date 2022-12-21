@@ -54,3 +54,9 @@ $ git commit -m "first commit"
 $ git branch -M main
 $ git remote add origin https://github.com/profile/repository.git
 $ git push -u origin main
+
+
+RUN rc-update add rsyslog default\
+  && mkdir /run/openrc\
+  && touch /run/openrc/softlevel\
+  && rc-service rsyslog start
